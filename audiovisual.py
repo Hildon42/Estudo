@@ -8,20 +8,13 @@ from tkcalendar import DateEntry
 import datetime
 
 
-janela = ctk.CTk()
-janela.title("teste")
-janela.geometry("500x500")
-janela.maxsize(width=900, height=550)
-janela.minsize(width=500, height=300)
-janela.resizable(width=False, height=False)
-
-janela._set_appearance_mode("dark")
 
 
-global id_login
 
-id_login = 1
 
+#global id_login
+
+#id_login = 2
 
 root = Tk()
 
@@ -56,7 +49,7 @@ class Limps():
 
         # Insere o registro do filme assistido na tabela correspondente
             cursor.execute("INSERT INTO audiovisual (id_usuario, nomeaudivisual, nome_tipoproduc, nome_gen, data_assis) VALUES (?, ?, ?, ?, ?)",
-                       (id_login, nome_assis, producao, genero, data_assistido))
+                       (id_loginn, nome_assis, producao, genero, data_assistido))
             
 
             conn.commit()
@@ -289,10 +282,10 @@ class Audiovisual(Limps):
         
 
         if id_login:
-            cursor.execute("SELECT id_audvis, nomeaudivisual, nome_tipoproduc, nome_gen, data_assis FROM audiovisual")
+            cursor.execute("SELECT id_audvis, nomeaudivisual, nome_tipoproduc, nome_gen, data_assis FROM audiovisual where id_usuario =?", id_login)
             
         else:
-            cursor.execute("SELECT id_audvis, nomeaudivisual, nome_tipoproduc, nome_gen, data_assis FROM audiovisual")
+            cursor.execute("SELECT id_audvis, nomeaudivisual, nome_tipoproduc, nome_gen, data_assis FROM audiovisual where id_usuario =?", id_login)
 
         resultados = cursor.fetchall()
 
@@ -319,10 +312,10 @@ class Audiovisual(Limps):
         
 
         if id_login:
-            cursor.execute("SELECT id_audvis, nomeaudivisual, nome_tipoproduc, nome_gen, data_assis FROM audiovisual where audiovisual.nome_tipoproduc = ?", ("Filme"))
+            cursor.execute("SELECT id_audvis, nomeaudivisual, nome_tipoproduc, nome_gen, data_assis FROM audiovisual where audiovisual.nome_tipoproduc = ? and audiovisual.id_usuario = ?", ("Filme", id_login))
             
         else:
-            cursor.execute("SELECT id_audvis, nomeaudivisual, nome_tipoproduc, nome_gen, data_assis FROM audiovisual where audiovisual.nome_tipoproduc = ?", ("Filme"))
+            cursor.execute("SELECT id_audvis, nomeaudivisual, nome_tipoproduc, nome_gen, data_assis FROM audiovisual where audiovisual.nome_tipoproduc = ? and audiovisual.id_usuario = ?", ("Filme", id_login))
 
         resultados = cursor.fetchall()
 
@@ -349,10 +342,10 @@ class Audiovisual(Limps):
         
 
         if id_login:
-            cursor.execute("SELECT id_audvis, nomeaudivisual, nome_tipoproduc, nome_gen, data_assis FROM audiovisual where audiovisual.nome_tipoproduc = ?", ("Série"))
+            cursor.execute("SELECT id_audvis, nomeaudivisual, nome_tipoproduc, nome_gen, data_assis FROM audiovisual where audiovisual.nome_tipoproduc = ? and audiovisual.id_usuario = ?", ("Série",id_login))
             
         else:
-            cursor.execute("SELECT id_audvis, nomeaudivisual, nome_tipoproduc, nome_gen, data_assis FROM audiovisual where audiovisual.nome_tipoproduc = ?", ("Série"))
+            cursor.execute("SELECT id_audvis, nomeaudivisual, nome_tipoproduc, nome_gen, data_assis FROM audiovisual where audiovisual.nome_tipoproduc = ? and audiovisual.id_usuario = ?", ("Série",id_login))
 
         resultados = cursor.fetchall()
 
@@ -379,10 +372,10 @@ class Audiovisual(Limps):
         
 
         if id_login:
-            cursor.execute("SELECT id_audvis, nomeaudivisual, nome_tipoproduc, nome_gen, data_assis FROM audiovisual where audiovisual.nome_tipoproduc = ?", ("Documentário"))
+            cursor.execute("SELECT id_audvis, nomeaudivisual, nome_tipoproduc, nome_gen, data_assis FROM audiovisual where audiovisual.nome_tipoproduc = ?  and id_usuario = ?", ("Documentário", id_login))
             
         else:
-            cursor.execute("SELECT id_audvis, nomeaudivisual, nome_tipoproduc, nome_gen, data_assis FROM audiovisual where audiovisual.nome_tipoproduc = ?", ("Documentário"))
+            cursor.execute("SELECT id_audvis, nomeaudivisual, nome_tipoproduc, nome_gen, data_assis FROM audiovisual where audiovisual.nome_tipoproduc = ? and id_usuario = ?", ("Documentário", id_login))
 
         resultados = cursor.fetchall()
 
@@ -409,10 +402,10 @@ class Audiovisual(Limps):
         
 
         if id_login:
-            cursor.execute("SELECT id_audvis, nomeaudivisual, nome_tipoproduc, nome_gen, data_assis FROM audiovisual where audiovisual.nome_tipoproduc = ?", ("Animação"))
+            cursor.execute("SELECT id_audvis, nomeaudivisual, nome_tipoproduc, nome_gen, data_assis FROM audiovisual where audiovisual.nome_tipoproduc = ? and audiovisual.id_usuario = ?", ("Animação", id_login))
             
         else:
-            cursor.execute("SELECT id_audvis, nomeaudivisual, nome_tipoproduc, nome_gen, data_assis FROM audiovisual where audiovisual.nome_tipoproduc = ?", ("Animação"))
+            cursor.execute("SELECT id_audvis, nomeaudivisual, nome_tipoproduc, nome_gen, data_assis FROM audiovisual where audiovisual.nome_tipoproduc = ? and audiovisual.id_usuario = ?", ("Animação", id_login))
 
         resultados = cursor.fetchall()
 
@@ -440,14 +433,7 @@ class Audiovisual(Limps):
             self.datassis.insert(END, col5)
 
 
-    def janela2(self):
-        self.root2 = Toplevel()
-        self.root2.title("Login")
-        self.root2.configure(background= 'lightblue')
-        self.root2.geometry("400x200")
-        self.root2.transient(self.root2)
-        self.root2.focus_force()
-        self.root2.grab_set()
+
         
 
 Audiovisual()
